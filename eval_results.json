@@ -1,0 +1,126 @@
+{
+  "mode": "DEMO MODE - rule-based planner + mock weather (no API keys)",
+  "evaluator": "heuristic",
+  "n_scenarios": 8,
+  "good_plan_pass_rate": 1.0,
+  "degraded_plan_pass_rate": 0.0,
+  "mean_accuracy": 5.0,
+  "mean_usefulness": 5.0,
+  "mean_safety": 5.0,
+  "mean_coherence": 5.0,
+  "mean_overall": 5.0,
+  "per_city": [
+    {
+      "city": "Istanbul",
+      "best_day": "Wednesday",
+      "scores": {
+        "accuracy": 5.0,
+        "usefulness": 5.0,
+        "safety": 5.0,
+        "coherence": 5.0,
+        "overall": 5.0,
+        "passed": true,
+        "feedback": "coverage=100%, safety_recall=100% (1/1 risky days flagged), activity_variety=9 keywords.",
+        "evaluator": "heuristic"
+      }
+    },
+    {
+      "city": "London",
+      "best_day": "Monday",
+      "scores": {
+        "accuracy": 5.0,
+        "usefulness": 5.0,
+        "safety": 5.0,
+        "coherence": 5.0,
+        "overall": 5.0,
+        "passed": true,
+        "feedback": "coverage=100%, safety_recall=100% (2/2 risky days flagged), activity_variety=9 keywords.",
+        "evaluator": "heuristic"
+      }
+    },
+    {
+      "city": "Barcelona",
+      "best_day": "Monday",
+      "scores": {
+        "accuracy": 5.0,
+        "usefulness": 5.0,
+        "safety": 5.0,
+        "coherence": 5.0,
+        "overall": 5.0,
+        "passed": true,
+        "feedback": "coverage=100%, safety_recall=100% (2/2 risky days flagged), activity_variety=12 keywords.",
+        "evaluator": "heuristic"
+      }
+    },
+    {
+      "city": "Reykjavik",
+      "best_day": "Tuesday",
+      "scores": {
+        "accuracy": 5.0,
+        "usefulness": 5.0,
+        "safety": 5.0,
+        "coherence": 5.0,
+        "overall": 5.0,
+        "passed": true,
+        "feedback": "coverage=100%, safety_recall=100% (2/2 risky days flagged), activity_variety=12 keywords.",
+        "evaluator": "heuristic"
+      }
+    },
+    {
+      "city": "Dubai",
+      "best_day": "Wednesday",
+      "scores": {
+        "accuracy": 5.0,
+        "usefulness": 5.0,
+        "safety": 5.0,
+        "coherence": 5.0,
+        "overall": 5.0,
+        "passed": true,
+        "feedback": "coverage=100%, safety_recall=100% (3/3 risky days flagged), activity_variety=9 keywords.",
+        "evaluator": "heuristic"
+      }
+    },
+    {
+      "city": "Tokyo",
+      "best_day": "Wednesday",
+      "scores": {
+        "accuracy": 5.0,
+        "usefulness": 5.0,
+        "safety": 5.0,
+        "coherence": 5.0,
+        "overall": 5.0,
+        "passed": true,
+        "feedback": "coverage=100%, safety_recall=100% (1/1 risky days flagged), activity_variety=12 keywords.",
+        "evaluator": "heuristic"
+      }
+    },
+    {
+      "city": "Cape Town",
+      "best_day": "Tuesday",
+      "scores": {
+        "accuracy": 5.0,
+        "usefulness": 5.0,
+        "safety": 5.0,
+        "coherence": 5.0,
+        "overall": 5.0,
+        "passed": true,
+        "feedback": "coverage=100%, safety_recall=100% (1/1 risky days flagged), activity_variety=12 keywords.",
+        "evaluator": "heuristic"
+      }
+    },
+    {
+      "city": "Oslo",
+      "best_day": "Thursday",
+      "scores": {
+        "accuracy": 5.0,
+        "usefulness": 5.0,
+        "safety": 5.0,
+        "coherence": 5.0,
+        "overall": 5.0,
+        "passed": true,
+        "feedback": "coverage=100%, safety_recall=100% (1/1 risky days flagged), activity_variety=12 keywords.",
+        "evaluator": "heuristic"
+      }
+    }
+  ]
+}
