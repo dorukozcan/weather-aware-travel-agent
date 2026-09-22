@@ -53,7 +53,7 @@ python app.py               # opens the Gradio app at http://127.0.0.1:7860
 ### Step 1 — Create the Space
 1. Sign in at **https://huggingface.co** → click your avatar → **New Space**.
 2. Owner = you. Space name = e.g. `travel-weather-agent`.
-3. **SDK = Gradio**. Visibility = **Public** (the assignment needs a public link).
+3. **SDK = Gradio**. Visibility = **Public**.
 4. Click **Create Space**.
 
 ### Step 2 — Upload the project files
@@ -100,16 +100,6 @@ https://huggingface.co/spaces/<your-username>/travel-weather-agent
 
 Open it, plan a trip, and confirm the banner reads **FULL AGENT MODE** (if you
 added the keys) or **DEMO MODE** (if not).
-
----
-
-## Part D — Submit (Upload #3)
-
-1. **Blog post:** paste `BLOG_POST.md` into a public Medium post (or keep it in
-   the repo as the project documentation). Include the link to the live Space.
-2. **Repo / Space link:** the public Hugging Face Space link doubles as both the
-   live demo and the code repository (the Files tab shows all source).
-3. Add both links to the MS Teams assignment for **Upload #3**.
 
 ---
 
