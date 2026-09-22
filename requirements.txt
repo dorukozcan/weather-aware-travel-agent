@@ -1,0 +1,12 @@
+gradio==4.44.1
+huggingface_hub<0.26               # gradio 4.44.1 still imports HfFolder (removed in 0.26)
+jinja2>=3.1.2                      # required by pandas Styler used in gr.Dataframe
+audioop-lts; python_version>="3.13" # backport: Python 3.13 removed stdlib audioop (gradio->pydub)
+fastapi==0.114.2                  # pin: gradio 4.44.1 uses old starlette TemplateResponse signature
+starlette==0.38.6                 # pin: newer starlette (1.x) breaks gradio 4.44.1 at launch
+langchain>=0.3.0,<0.4
+langchain-core>=0.3.0,<0.4
+langchain-groq>=0.2.0
+requests>=2.31
+matplotlib>=3.7
+python-dotenv>=1.0
