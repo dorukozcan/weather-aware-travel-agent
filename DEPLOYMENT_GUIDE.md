@@ -16,8 +16,9 @@ just upgrade it to the real LLM agent with live weather.
 2. Open **API Keys** → **Create API Key** → copy it (starts with `gsk_...`).
 3. Keep it somewhere safe — you paste it into the Space, never into the code.
 
-Groq's free tier is generous and very fast. If the default model
-(`llama-3.3-70b-versatile`) is ever retired, pick a current one from
+Groq's free tier is generous and very fast. The default model is
+`openai/gpt-oss-120b` (the original `llama-3.3-70b-versatile` was retired on
+16 Aug 2026). If the default is ever retired, pick a current one from
 **https://console.groq.com/docs/models** and set it as `GROQ_MODEL`.
 
 ### 2. OpenWeatherMap key (optional — enables *live* weather)

@@ -10,7 +10,7 @@ written feedback:
   * safety      - are warnings issued for genuinely adverse days?
   * coherence   - is the plan well-structured and easy to act on?
 
-In FULL MODE the critic is a Groq / LLaMA 3 model (temperature 0) prompted to
+In FULL MODE the critic is an LLM on Groq (temperature 0) prompted to
 return strict JSON. In DEMO MODE a transparent heuristic evaluator checks the
 rendered plan against the forecast. `run_evaluation.py` drives this module over
 several scenarios - including deliberately degraded plans - to demonstrate that

@@ -6,7 +6,7 @@ This module implements the REQUIRED autonomous decision loop and tool usage.
 Two interchangeable engines produce a travel plan from a forecast:
 
   * _plan_with_llm()   - FULL MODE. A LangChain tool-calling (ReAct-style) agent
-                         powered by Groq / LLaMA 3 decides, on its own, which
+                         powered by an LLM on Groq decides, on its own, which
                          tools to call and in what order, reasons over every
                          forecast day, then writes the plan. Tool calls and the
                          reasoning trace are captured for transparency.
@@ -195,7 +195,7 @@ def _render_plan_markdown(forecast: Forecast, ranked_sorted: list,
 
 
 # ---------------------------------------------------------------------------
-# FULL MODE engine: LangChain tool-calling agent (Groq / LLaMA 3)
+# FULL MODE engine: LangChain tool-calling agent (LLM on Groq)
 # ---------------------------------------------------------------------------
 _SYSTEM_PROMPT = """You are an autonomous Travel-Planning Agent.
 
@@ -321,6 +321,7 @@ def plan_trip(city: str, days: int | None = None,
             return _plan_with_llm(forecast, city, preferences, days)
         except Exception as exc:  # noqa: BLE001 - degrade gracefully
             fallback = _plan_rule_based(forecast, preferences)
+            fallback.mode = config.fallback_label(type(exc).__name__)
             fallback.reasoning_trace = (
                 f"[warning] LLM agent failed ({type(exc).__name__}: {exc}); "
                 f"fell back to the rule-based controller.\n"

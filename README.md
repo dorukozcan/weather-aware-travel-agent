@@ -6,9 +6,13 @@
 
 An agentic AI app that plans trips around the weather. Give it a city, a trip
 length and your preferences; a **LangChain tool-calling agent** running
-**LLaMA 3.3 70B on Groq** fetches the forecast, ranks the days, suggests
+**GPT-OSS 120B on Groq** fetches the forecast, ranks the days, suggests
 weather-appropriate activities and flags risky conditions. A separate
 **LLM-as-judge critic** then grades every plan and returns pass/fail.
+
+> The agent was first built on LLaMA 3.3 70B. Groq retired that model on
+> 16 Aug 2026, so the default is now `openai/gpt-oss-120b`, Groq's recommended
+> replacement. Any current Groq model can be set through `GROQ_MODEL`.
 
 **Live demo:** [huggingface.co/spaces/dorukozcan/travel-agent](https://huggingface.co/spaces/dorukozcan/travel-agent)
 (free tier: the Space sleeps when idle, so the first load can take a minute).
@@ -19,7 +23,7 @@ weather-appropriate activities and flags risky conditions. A separate
 
 ```mermaid
 flowchart LR
-    U["User<br/>city · days · preferences"] --> A["Planning agent<br/>LangChain tool calling<br/>LLaMA 3.3 70B (Groq)"]
+    U["User<br/>city · days · preferences"] --> A["Planning agent<br/>LangChain tool calling<br/>GPT-OSS 120B (Groq)"]
     A -- get_weather --> W["Forecast tool<br/>OpenWeatherMap 5-day<br/>or deterministic mock"]
     A -- recommend_activities --> R["Activity tool"]
     A --> P["Markdown plan<br/>ranked days · activities · warnings"]
@@ -46,8 +50,12 @@ flowchart LR
 | Mode | Trigger | Planner | Weather | Evaluator |
 |------|---------|---------|---------|-----------|
 | Demo | no keys | rule-based controller | deterministic mock | heuristic |
-| Agent | `GROQ_API_KEY` | LLaMA 3.3 70B agent | mock | LLM critic |
-| Full | `GROQ_API_KEY` + `OPENWEATHER_API_KEY` | LLaMA 3.3 70B agent | live OpenWeatherMap | LLM critic |
+| Agent | `GROQ_API_KEY` | GPT-OSS 120B agent | mock | LLM critic |
+| Full | `GROQ_API_KEY` + `OPENWEATHER_API_KEY` | GPT-OSS 120B agent | live OpenWeatherMap | LLM critic |
+
+If a key is set but the LLM call fails (expired key, retired model, outage), the
+rule-based planner answers and the mode banner says **FALLBACK MODE** instead of
+claiming full agent mode.
 
 Both keys are free. Adding them upgrades the app in place, with no code changes.
 
@@ -91,9 +99,9 @@ planner. Running the harness in full mode with the LLM critic is the next step.
 
 ## Tests
 
-`test_smoke.py` runs 6 offline end-to-end tests in demo mode: forecast shape,
+`test_smoke.py` runs 7 offline end-to-end tests in demo mode: forecast shape,
 mock determinism, activity mapping, plan + evaluation, rejection of a broken
-plan, and the Gradio handler. They run on every push via GitHub Actions.
+plan, the fallback label when the LLM fails, and the Gradio handler. They run on every push via GitHub Actions.
 
 ## Project structure
 
@@ -117,7 +125,7 @@ plan, and the Gradio handler. They run on every push via GitHub Actions.
 
 ## Tech stack
 
-Python · LangChain · Groq (LLaMA 3.3 70B) · OpenWeatherMap API · Gradio ·
+Python · LangChain · Groq (GPT-OSS 120B) · OpenWeatherMap API · Gradio ·
 Matplotlib · Hugging Face Spaces · GitHub Actions
 
 ## Author

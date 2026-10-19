@@ -8,8 +8,12 @@ committed to the repository. The app is designed to run in two modes:
                   a rule-based planner/evaluator are used so the whole pipeline
                   still runs and can be graded offline.
   * FULL MODE   - GROQ_API_KEY (and optionally OPENWEATHER_API_KEY) are present.
-                  A real LangChain tool-calling agent powered by Groq / LLaMA 3
-                  drives the autonomous loop, and a real LLM critic evaluates it.
+                  A real LangChain tool-calling agent powered by an LLM on Groq
+                  (default openai/gpt-oss-120b) drives the autonomous loop, and a
+                  real LLM critic evaluates it.
+  * FALLBACK    - a Groq key is set but the LLM call fails (expired key, retired
+                  model, outage). The rule-based planner answers and the UI says
+                  so instead of claiming full agent mode.
 
 Set keys locally with a .env file (see .env.example) or, on Hugging Face Spaces,
 through Settings -> Variables and secrets.
@@ -41,7 +45,9 @@ OPENWEATHER_API_KEY: str = _clean(os.environ.get("OPENWEATHER_API_KEY"))
 # Groq model id. Model availability on Groq changes over time; if the default
 # is ever deprecated, override it via the GROQ_MODEL environment variable.
 # See https://console.groq.com/docs/models for the current list.
-GROQ_MODEL: str = _clean(os.environ.get("GROQ_MODEL")) or "llama-3.3-70b-versatile"
+# The project started on llama-3.3-70b-versatile, which Groq retired on
+# 16 Aug 2026; openai/gpt-oss-120b is Groq's recommended replacement.
+GROQ_MODEL: str = _clean(os.environ.get("GROQ_MODEL")) or "openai/gpt-oss-120b"
 
 # --- Derived capability flags ----------------------------------------------
 USE_LLM: bool = bool(GROQ_API_KEY)
@@ -56,9 +62,16 @@ REQUEST_TIMEOUT: int = 15           # seconds for HTTP calls
 def mode_label() -> str:
     """Human-readable description of the current runtime mode."""
     if USE_LLM and USE_REAL_WEATHER:
-        return "FULL AGENT MODE - Groq LLM + live OpenWeatherMap data"
+        return f"FULL AGENT MODE - Groq LLM ({GROQ_MODEL}) + live OpenWeatherMap data"
     if USE_LLM and not USE_REAL_WEATHER:
-        return "AGENT MODE - Groq LLM + mock weather (no OpenWeather key)"
+        return f"AGENT MODE - Groq LLM ({GROQ_MODEL}) + mock weather (no OpenWeather key)"
     if not USE_LLM and USE_REAL_WEATHER:
         return "DEMO MODE - rule-based planner + live OpenWeatherMap data"
     return "DEMO MODE - rule-based planner + mock weather (no API keys)"
+
+
+def fallback_label(reason: str) -> str:
+    """Mode shown when a Groq key is set but the LLM call failed, so the plan
+    came from the rule-based planner."""
+    return (f"FALLBACK MODE - the Groq LLM call failed ({reason}); "
+            f"this plan comes from the rule-based planner")

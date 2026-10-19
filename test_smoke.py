@@ -58,6 +58,26 @@ def test_evaluator_rejects_garbage():
     print(f"ok  test_evaluator_rejects_garbage (overall={ev.overall})")
 
 
+def test_fallback_is_labelled():
+    """A failing LLM (expired key, retired model) must not be shown as full
+    agent mode: the plan comes from the rule-based planner and says so."""
+    import agent
+
+    def broken_llm(*args, **kwargs):
+        raise RuntimeError("simulated Groq failure")
+
+    saved_flag, saved_fn = config.USE_LLM, agent._plan_with_llm
+    config.USE_LLM, agent._plan_with_llm = True, broken_llm
+    try:
+        result = agent.plan_trip("Rome", days=3, preferences="")
+    finally:
+        config.USE_LLM, agent._plan_with_llm = saved_flag, saved_fn
+    assert result.mode.startswith("FALLBACK MODE"), result.mode
+    assert "fell back to the rule-based controller" in result.reasoning_trace
+    assert result.plan_markdown
+    print("ok  test_fallback_is_labelled")
+
+
 def test_ui_handler():
     from app import run_planner
     mode, plan, table, chart, trace, eval_md = run_planner("Oslo", 4, "")
@@ -74,5 +94,6 @@ if __name__ == "__main__":
     test_activities()
     test_plan_and_eval()
     test_evaluator_rejects_garbage()
+    test_fallback_is_labelled()
     test_ui_handler()
     print("\nAll smoke tests passed.")
